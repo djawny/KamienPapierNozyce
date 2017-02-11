@@ -8,13 +8,84 @@
     tools:context="com.example.daniel.kamienpapiernozyce.MainActivity">
 
     <LinearLayout
+        android:id="@+id/topLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorAccent"
+        android:orientation="horizontal"
+        android:padding="8dp">
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Gracz:" />
+
+        <TextView
+            android:id="@+id/gamerWinsTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="3"
+            android:gravity="center"
+            android:text="0" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Komputer:" />
+
+        <TextView
+            android:id="@+id/computerWinsTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:ems="3"
+            android:text="0" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/middleLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/topLayout"
+        android:orientation="horizontal"
+        android:padding="8dp">
+
+        <ImageView
+            android:id="@+id/GamerChooseImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:adjustViewBounds="true"
+            android:padding="8dp"
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/nozyce" />
+
+        <ImageView
+            android:id="@+id/computerChooseImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:adjustViewBounds="true"
+            android:padding="8dp"
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/kamien" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/bottomLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:orientation="horizontal">
 
         <ImageButton
-            android:id="@+id/imageButton2"
+            android:id="@+id/paperButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="63dp"
@@ -25,7 +96,7 @@
             app:srcCompat="@drawable/papier" />
 
         <ImageButton
-            android:id="@+id/imageButton3"
+            android:id="@+id/scissorsButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -35,7 +106,7 @@
             app:srcCompat="@drawable/nozyce" />
 
         <ImageButton
-            android:id="@+id/imageButton"
+            android:id="@+id/rockButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
