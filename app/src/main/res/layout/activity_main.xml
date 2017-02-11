@@ -43,6 +43,5 @@
             android:padding="8dp"
             android:scaleType="fitXY"
             app:srcCompat="@drawable/kamien" />
-    </>
-
+    </LinearLayout>
 </RelativeLayout>
