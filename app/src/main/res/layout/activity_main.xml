@@ -54,7 +54,7 @@
         android:id="@+id/middleLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/topLayout"
+        android:layout_centerInParent="true"
         android:orientation="horizontal"
         android:padding="8dp">
 
@@ -90,35 +90,22 @@
         <ImageButton
             android:id="@+id/paperButton"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="63dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:adjustViewBounds="true"
-            android:background="@color/colorPrimaryDark"
-            android:padding="8dp"
-            android:scaleType="fitXY"
             app:srcCompat="@drawable/paper" />
 
         <ImageButton
             android:id="@+id/scissorsButton"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:adjustViewBounds="true"
-            android:background="@color/colorPrimaryDark"
-            android:padding="8dp"
-            android:scaleType="fitXY"
             app:srcCompat="@drawable/scissors" />
 
         <ImageButton
             android:id="@+id/rockButton"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:adjustViewBounds="true"
-            android:background="@color/colorPrimaryDark"
-            android:padding="8dp"
-            android:scaleType="fitXY"
             app:srcCompat="@drawable/rock" />
     </LinearLayout>
 </RelativeLayout>

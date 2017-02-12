@@ -6,6 +6,14 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="imageButtonStyle">@style/gameButton</item>
+    </style>
+
+    <style name="gameButton">
+        <item name="android:background">@color/colorPrimaryDark</item>
+        <item name="android:adjustViewBounds">true</item>
+        <item name="android:scaleType">fitXY</item>
+        <item name="android:padding">8dp</item>
     </style>
 
 </resources>
