@@ -11,25 +11,25 @@ import butterknife.BindView;
 public class MainActivity extends AppCompatActivity {
 
     @BindView(R.id.computerChoiceImageView)
-    private ImageView computerChoiceImageView;
+    ImageView computerChoiceImageView;
 
     @BindView(R.id.gamerChoiceImageView)
-    private ImageView gamerChoiceImageView;
+    ImageView gamerChoiceImageView;
 
     @BindView(R.id.gamerWinsTextView)
-    private TextView gamerWinsTextView;
+    TextView gamerWinsTextView;
 
     @BindView(R.id.computerWinsTextView)
-    private TextView computerWinsTextView;
+    TextView computerWinsTextView;
 
     @BindView(R.id.paperButton)
-    private Button paperButton;
+    Button paperButton;
 
     @BindView(R.id.scissorsButton)
-    private Button scissorsButton;
+    Button scissorsButton;
 
     @BindView(R.id.rockButton)
-    private Button rockButton;
+    Button rockButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
