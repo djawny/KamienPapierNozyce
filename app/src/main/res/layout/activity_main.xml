@@ -54,7 +54,7 @@
         android:id="@+id/middleLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+        android:layout_below="@+id/topLayout"
         android:orientation="horizontal"
         android:padding="8dp">
 
