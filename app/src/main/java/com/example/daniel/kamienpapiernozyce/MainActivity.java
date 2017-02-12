@@ -1,7 +1,8 @@
 package com.example.daniel.kamienpapiernozyce;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -9,7 +10,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     @BindView(R.id.computerChoiceImageView)
     ImageView computerChoiceImageView;
@@ -37,6 +38,24 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        paperButton.setOnClickListener(this);
+        scissorsButton.setOnClickListener(this);
+        rockButton.setOnClickListener(this);
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.paperButton:
+
+                break;
+            case R.id.scissorsButton:
+
+                break;
+            case R.id.rockButton:
+
+                break;
+        }
     }
 }
