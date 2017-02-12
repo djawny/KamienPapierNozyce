@@ -33,22 +33,35 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @BindView(R.id.rockButton)
     Button rockButton;
 
+    Model model;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        setListeners();
+        init();
+    }
+
+    private void setListeners() {
         paperButton.setOnClickListener(this);
         scissorsButton.setOnClickListener(this);
         rockButton.setOnClickListener(this);
+    }
 
+    private void init() {
+        model = new Model();
+        gamerChoiceImageView.setVisibility(View.GONE);
+        computerChoiceImageView.setVisibility(View.GONE);
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.paperButton:
-
+                gamerChoiceImageView.setImageResource(R.drawable.paper);
+                gamerChoiceImageView.setVisibility(View.VISIBLE);
                 break;
             case R.id.scissorsButton:
 
