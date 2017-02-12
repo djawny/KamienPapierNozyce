@@ -94,6 +94,7 @@
             android:layout_marginBottom="63dp"
             android:layout_weight="1"
             android:adjustViewBounds="true"
+            android:background="@color/colorPrimaryDark"
             android:padding="8dp"
             android:scaleType="fitXY"
             app:srcCompat="@drawable/paper" />
@@ -104,6 +105,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:adjustViewBounds="true"
+            android:background="@color/colorPrimaryDark"
             android:padding="8dp"
             android:scaleType="fitXY"
             app:srcCompat="@drawable/scissors" />
@@ -114,6 +116,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:adjustViewBounds="true"
+            android:background="@color/colorPrimaryDark"
             android:padding="8dp"
             android:scaleType="fitXY"
             app:srcCompat="@drawable/rock" />
