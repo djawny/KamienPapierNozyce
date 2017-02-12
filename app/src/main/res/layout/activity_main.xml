@@ -57,7 +57,7 @@
         android:padding="8dp">
 
         <ImageView
-            android:id="@+id/GamerChooseImageView"
+            android:id="@+id/gamerChoiceImageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -67,7 +67,7 @@
             app:srcCompat="@drawable/nozyce" />
 
         <ImageView
-            android:id="@+id/computerChooseImageView"
+            android:id="@+id/computerChoiceImageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
