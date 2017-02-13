@@ -3,28 +3,24 @@ package com.example.daniel.kamienpapiernozyce;
 import java.util.Random;
 
 public class GameModel {
-    private int gamerWinsNum;
-    private int computerWinsNum;
+    private int gamerWins;
+    private int computerWins;
 
     public GameModel() {
-        gamerWinsNum = 0;
-        computerWinsNum = 0;
+        resetWins();
     }
 
-    public int getGamerWinsNum() {
-        return gamerWinsNum;
+    private void resetWins() {
+        gamerWins = 0;
+        computerWins = 0;
     }
 
-    public void setGamerWinsNum(int gamerWinsNum) {
-        this.gamerWinsNum = gamerWinsNum;
+    public int getGamerWins() {
+        return gamerWins;
     }
 
-    public int getComputerWinsNum() {
-        return computerWinsNum;
-    }
-
-    public void setComputerWinsNum(int computerWinsNum) {
-        this.computerWinsNum = computerWinsNum;
+    public int getComputerWins() {
+        return computerWins;
     }
 
     public String createRandomGesture() {
@@ -42,5 +38,21 @@ public class GameModel {
                 break;
         }
         return result;
+    }
+
+    public String checkWinningConditions(String gamerGesture, String computerGesture) {
+        String winMsg = "Remis!";
+        if (!gamerGesture.equals(computerGesture)) {
+            if (gamerGesture.equals("paper") && computerGesture.equals("rock")
+                    || gamerGesture.equals("scissors") && computerGesture.equals("paper")
+                    || gamerGesture.equals("rock") && computerGesture.equals("scissors")) {
+                winMsg = "Gracz wygrywa!";
+                gamerWins += 1;
+            } else {
+                winMsg = "Computer wygrywa!";
+                computerWins += 1;
+            }
+        }
+        return winMsg;
     }
 }

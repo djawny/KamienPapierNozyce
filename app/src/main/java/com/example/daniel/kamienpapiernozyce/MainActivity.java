@@ -16,6 +16,8 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
+    GameModel gameModel;
+
     @BindView(R.id.computerChoiceImageView)
     ImageView computerChoiceImageView;
 
@@ -46,8 +48,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @BindDrawable(R.drawable.rock)
     Drawable rock;
 
-    GameModel gameModel;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,46 +74,39 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Drawable randomGesture = randomGesture();
         switch (v.getId()) {
             case R.id.paperButton:
-                setClickReaction(paper, randomGesture);
+                onClickReaction(paper, randomGesture);
                 break;
             case R.id.scissorsButton:
-                setClickReaction(scissors, randomGesture);
+                onClickReaction(scissors, randomGesture);
                 break;
             case R.id.rockButton:
-                setClickReaction(rock, randomGesture);
+                onClickReaction(rock, randomGesture);
                 break;
         }
-        setResultsVisible();
     }
 
-    private void setClickReaction(Drawable paper, Drawable randomGesture) {
+    private void onClickReaction(Drawable paper, Drawable randomGesture) {
         gamerChoiceImageView.setImageDrawable(paper);
         computerChoiceImageView.setImageDrawable(randomGesture);
-        choiceWinner(paper, randomGesture);
+        setResultsVisible();
+        displayGameResult(paper, randomGesture);
+    }
+
+    private void displayGameResult(Drawable gamerGesture, Drawable computerGesture) {
+        String winMsg = gameModel.checkWinningConditions(drawToStr(gamerGesture), drawToStr(computerGesture));
+        toastMsg(winMsg);
         updateWinsView();
     }
 
-    private void choiceWinner(Drawable gamerGesture, Drawable computerGesture) {
-        String winMsg = "Remis!";
-        if (!gamerGesture.equals(computerGesture)) {
-            if (gamerGesture.equals(paper) && computerGesture.equals(rock)
-                    || gamerGesture.equals(scissors) && computerGesture.equals(paper)
-                    || gamerGesture.equals(rock) && computerGesture.equals(scissors)) {
-                winMsg = "Gracz wygrywa!";
-                gameModel.setGamerWinsNum(gameModel.getGamerWinsNum() + 1);
-            } else {
-                winMsg = "Computer wygrywa!";
-                gameModel.setComputerWinsNum(gameModel.getComputerWinsNum() + 1);
-            }
-        }
-        Toast toast = Toast.makeText(getApplicationContext(), winMsg, Toast.LENGTH_SHORT);
+    private void toastMsg(String msg) {
+        Toast toast = Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
         toast.show();
     }
 
     private void updateWinsView() {
-        gamerWinsTextView.setText(String.valueOf(gameModel.getGamerWinsNum()));
-        computerWinsTextView.setText(String.valueOf(gameModel.getComputerWinsNum()));
+        gamerWinsTextView.setText(String.valueOf(gameModel.getGamerWins()));
+        computerWinsTextView.setText(String.valueOf(gameModel.getComputerWins()));
     }
 
     private void setResultsInvisible() {
@@ -127,18 +120,34 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private Drawable randomGesture() {
-        Drawable result = null;
-        switch (gameModel.createRandomGesture()) {
+        return strToDraw(gameModel.createRandomGesture());
+    }
+
+    private Drawable strToDraw(String gesture) {
+        Drawable drawableGesture = null;
+        switch (gesture) {
             case "paper":
-                result = paper;
+                drawableGesture = paper;
                 break;
             case "scissors":
-                result = scissors;
+                drawableGesture = scissors;
                 break;
             case "rock":
-                result = rock;
+                drawableGesture = rock;
                 break;
         }
-        return result;
+        return drawableGesture;
+    }
+
+    private String drawToStr(Drawable gesture) {
+        String gestureName;
+        if (gesture.equals(paper)) {
+            gestureName = "paper";
+        } else if (gesture.equals(scissors)) {
+            gestureName = "scissors";
+        } else {
+            gestureName = "rock";
+        }
+        return gestureName;
     }
 }
