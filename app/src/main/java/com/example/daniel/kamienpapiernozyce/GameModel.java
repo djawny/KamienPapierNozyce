@@ -3,24 +3,24 @@ package com.example.daniel.kamienpapiernozyce;
 import java.util.Random;
 
 public class GameModel {
-    private int gamerWins;
-    private int computerWins;
+    private int gamerScore;
+    private int computerScore;
 
     public GameModel() {
         resetWins();
     }
 
     private void resetWins() {
-        gamerWins = 0;
-        computerWins = 0;
+        gamerScore = 0;
+        computerScore = 0;
     }
 
-    public int getGamerWins() {
-        return gamerWins;
+    public int getGamerScore() {
+        return gamerScore;
     }
 
-    public int getComputerWins() {
-        return computerWins;
+    public int getComputerScore() {
+        return computerScore;
     }
 
     public String createRandomGesture() {
@@ -47,10 +47,10 @@ public class GameModel {
                     || gamerGesture.equals("scissors") && computerGesture.equals("paper")
                     || gamerGesture.equals("rock") && computerGesture.equals("scissors")) {
                 winMsg = "Gracz wygrywa!";
-                gamerWins += 1;
+                gamerScore += 1;
             } else {
                 winMsg = "Computer wygrywa!";
-                computerWins += 1;
+                computerScore += 1;
             }
         }
         return winMsg;

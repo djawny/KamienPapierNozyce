@@ -24,7 +24,7 @@
             android:text="Gracz:" />
 
         <TextView
-            android:id="@+id/gamerWinsTextView"
+            android:id="@+id/gamerScoreTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@android:color/white"
@@ -41,7 +41,7 @@
             android:text="Komputer:" />
 
         <TextView
-            android:id="@+id/computerWinsTextView"
+            android:id="@+id/computerScoreTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@android:color/white"

@@ -30,10 +30,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @BindView(R.id.gamerChoiceImageView)
     ImageView gamerChoiceImageView;
 
-    @BindView(R.id.gamerWinsTextView)
+    @BindView(R.id.gamerScoreTextView)
     TextView gamerWinsTextView;
 
-    @BindView(R.id.computerWinsTextView)
+    @BindView(R.id.computerScoreTextView)
     TextView computerWinsTextView;
 
     @BindView(R.id.paperButton)
@@ -59,14 +59,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        setListeners();
         init();
-    }
-
-    private void setListeners() {
-        paperButton.setOnClickListener(this);
-        scissorsButton.setOnClickListener(this);
-        rockButton.setOnClickListener(this);
+        setListeners();
     }
 
     private void init() {
@@ -76,9 +70,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setResultsInvisible();
     }
 
+    private void setListeners() {
+        paperButton.setOnClickListener(this);
+        scissorsButton.setOnClickListener(this);
+        rockButton.setOnClickListener(this);
+    }
+
     @Override
     public void onClick(View v) {
-        Drawable randomGesture = randomGesture();
+        Drawable randomGesture = strToDraw(gameModel.createRandomGesture());
         switch (v.getId()) {
             case R.id.paperButton:
                 onClickReaction(paper, randomGesture);
@@ -102,26 +102,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         alertDialog.show();
     }
 
-    private void onClickReaction(Drawable gamerGesture, Drawable computerGesture) {
-        gamerChoiceImageView.setImageDrawable(gamerGesture);
-        computerChoiceImageView.setImageDrawable(computerGesture);
-        setResultsVisible();
-        winMsg = gameModel.checkWinningConditions(drawToStr(gamerGesture), drawToStr(computerGesture));
-        updateWinsView();
-        animateComputerImageView();
-    }
-
-    private void animateComputerImageView() {
-        Animation computerAnimation = AnimationUtils.loadAnimation(this, R.anim.magnification);
-        computerChoiceImageView.startAnimation(computerAnimation);
-        computerAnimation.setAnimationListener(this);
-    }
-
-    private void updateWinsView() {
-        gamerWinsTextView.setText(String.valueOf(gameModel.getGamerWins()));
-        computerWinsTextView.setText(String.valueOf(gameModel.getComputerWins()));
-    }
-
     private void setResultsInvisible() {
         gamerChoiceImageView.setVisibility(View.INVISIBLE);
         computerChoiceImageView.setVisibility(View.INVISIBLE);
@@ -132,8 +112,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         computerChoiceImageView.setVisibility(View.VISIBLE);
     }
 
-    private Drawable randomGesture() {
-        return strToDraw(gameModel.createRandomGesture());
+    private void onClickReaction(Drawable gamerGesture, Drawable computerGesture) {
+        gamerChoiceImageView.setImageDrawable(gamerGesture);
+        computerChoiceImageView.setImageDrawable(computerGesture);
+        setResultsVisible();
+        winMsg = gameModel.checkWinningConditions(drawToStr(gamerGesture), drawToStr(computerGesture));
+        updateWinsView();
+        animateComputerImageView();
+    }
+
+    private void updateWinsView() {
+        gamerWinsTextView.setText(String.valueOf(gameModel.getGamerScore()));
+        computerWinsTextView.setText(String.valueOf(gameModel.getComputerScore()));
+    }
+
+    private void animateComputerImageView() {
+        Animation computerAnimation = AnimationUtils.loadAnimation(this, R.anim.magnification);
+        computerChoiceImageView.startAnimation(computerAnimation);
+        computerAnimation.setAnimationListener(this);
     }
 
     private Drawable strToDraw(String gesture) {
