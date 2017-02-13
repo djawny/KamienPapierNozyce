@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -83,6 +85,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 onClickReaction(rock, randomGesture);
                 break;
         }
+        Animation computerAnimation = AnimationUtils.loadAnimation(this, R.anim.magnification);
+        v.startAnimation(computerAnimation);
     }
 
     private void onClickReaction(Drawable paper, Drawable randomGesture) {
