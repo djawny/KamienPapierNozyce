@@ -1,12 +1,14 @@
 package com.example.daniel.kamienpapiernozyce;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import butterknife.BindDrawable;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -25,13 +27,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     TextView computerWinsTextView;
 
     @BindView(R.id.paperButton)
-    Button paperButton;
+    ImageButton paperButton;
 
     @BindView(R.id.scissorsButton)
-    Button scissorsButton;
+    ImageButton scissorsButton;
 
     @BindView(R.id.rockButton)
-    Button rockButton;
+    ImageButton rockButton;
+
+    @BindDrawable(R.drawable.paper)
+    Drawable paper;
+
+    @BindDrawable(R.drawable.scissors)
+    Drawable scissors;
+
+    @BindDrawable(R.drawable.rock)
+    Drawable rock;
 
     Model model;
 
@@ -39,9 +50,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//        ButterKnife.bind(this);
-//        setListeners();
-//        init();
+        ButterKnife.bind(this);
+        setListeners();
+        init();
     }
 
     private void setListeners() {
@@ -52,23 +63,57 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void init() {
         model = new Model();
-        gamerChoiceImageView.setVisibility(View.GONE);
-        computerChoiceImageView.setVisibility(View.GONE);
+        updateWinsNum();
+        setResultsInvisible();
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.paperButton:
-                gamerChoiceImageView.setImageResource(R.drawable.paper);
-                gamerChoiceImageView.setVisibility(View.VISIBLE);
+                gamerChoiceImageView.setImageDrawable(paper);
+                computerChoiceImageView.setImageDrawable(randomGesture());
                 break;
             case R.id.scissorsButton:
-
+                gamerChoiceImageView.setImageDrawable(scissors);
+                computerChoiceImageView.setImageDrawable(randomGesture());
                 break;
             case R.id.rockButton:
-
+                gamerChoiceImageView.setImageDrawable(rock);
+                computerChoiceImageView.setImageDrawable(randomGesture());
                 break;
         }
+        setResultsVisible();
+    }
+
+    private void updateWinsNum() {
+        gamerWinsTextView.setText(String.valueOf(model.getGamerWinsNum()));
+        computerWinsTextView.setText(String.valueOf(model.getComputerWinsNum()));
+    }
+
+    private void setResultsInvisible() {
+        gamerChoiceImageView.setVisibility(View.INVISIBLE);
+        computerChoiceImageView.setVisibility(View.INVISIBLE);
+    }
+
+    private void setResultsVisible() {
+        gamerChoiceImageView.setVisibility(View.VISIBLE);
+        computerChoiceImageView.setVisibility(View.VISIBLE);
+    }
+
+    private Drawable randomGesture() {
+        Drawable result = null;
+        switch (model.createRandomGesture()) {
+            case "paper":
+                result = paper;
+                break;
+            case "scissors":
+                result = scissors;
+                break;
+            case "rock":
+                result = rock;
+                break;
+        }
+        return result;
     }
 }
