@@ -19,9 +19,10 @@ import butterknife.BindDrawable;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, DialogInterface.OnClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, DialogInterface.OnClickListener, Animation.AnimationListener {
 
     GameModel gameModel;
+    String winMsg;
 
     @BindView(R.id.computerChoiceImageView)
     ImageView computerChoiceImageView;
@@ -101,36 +102,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         alertDialog.show();
     }
 
-    private void onClickReaction(Drawable paper, Drawable randomGesture) {
-        gamerChoiceImageView.setImageDrawable(paper);
-        computerChoiceImageView.setImageDrawable(randomGesture);
+    private void onClickReaction(Drawable gamerGesture, Drawable computerGesture) {
+        gamerChoiceImageView.setImageDrawable(gamerGesture);
+        computerChoiceImageView.setImageDrawable(computerGesture);
         setResultsVisible();
-        displayGameResult(paper, randomGesture);
-        animateComputerImageView();
-    }
-
-    private void displayGameResult(Drawable gamerGesture, Drawable computerGesture) {
-        String winMsg = gameModel.checkWinningConditions(drawToStr(gamerGesture), drawToStr(computerGesture));
-//        toastMsg(winMsg);
-        showDialogWindow(winMsg);
+        winMsg = gameModel.checkWinningConditions(drawToStr(gamerGesture), drawToStr(computerGesture));
         updateWinsView();
+        animateComputerImageView();
     }
 
     private void animateComputerImageView() {
         Animation computerAnimation = AnimationUtils.loadAnimation(this, R.anim.magnification);
         computerChoiceImageView.startAnimation(computerAnimation);
-    }
-
-    private void toastMsg(String msg) {
-        Toast toast = Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT);
-        toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
-        toast.show();
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                setResultsInvisible();
-            }
-        }, 2500);
+        computerAnimation.setAnimationListener(this);
     }
 
     private void updateWinsView() {
@@ -190,5 +174,32 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 finish();
                 break;
         }
+    }
+
+    @Override
+    public void onAnimationStart(Animation animation) {
+
+    }
+
+    @Override
+    public void onAnimationEnd(Animation animation) {
+        showDialogWindow(winMsg);
+    }
+
+    @Override
+    public void onAnimationRepeat(Animation animation) {
+
+    }
+
+    private void toastMsg(String msg) {
+        Toast toast = Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
+        toast.show();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                setResultsInvisible();
+            }
+        }, 2500);
     }
 }
