@@ -2,6 +2,7 @@ package com.example.daniel.kamienpapiernozyce;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.View;
@@ -66,6 +67,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void init() {
+        setTitle("Kamień Papier Nożyce");
         gameModel = new GameModel();
         updateWinsView();
         setResultsInvisible();
@@ -85,8 +87,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 onClickReaction(rock, randomGesture);
                 break;
         }
-        Animation computerAnimation = AnimationUtils.loadAnimation(this, R.anim.magnification);
-        v.startAnimation(computerAnimation);
     }
 
     private void onClickReaction(Drawable paper, Drawable randomGesture) {
@@ -94,6 +94,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         computerChoiceImageView.setImageDrawable(randomGesture);
         setResultsVisible();
         displayGameResult(paper, randomGesture);
+        animateComputerImageView();
     }
 
     private void displayGameResult(Drawable gamerGesture, Drawable computerGesture) {
@@ -102,10 +103,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         updateWinsView();
     }
 
+    private void animateComputerImageView() {
+        Animation computerAnimation = AnimationUtils.loadAnimation(this, R.anim.magnification);
+        computerChoiceImageView.startAnimation(computerAnimation);
+    }
+
     private void toastMsg(String msg) {
         Toast toast = Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
         toast.show();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                setResultsInvisible();
+            }
+        }, 2500);
     }
 
     private void updateWinsView() {
