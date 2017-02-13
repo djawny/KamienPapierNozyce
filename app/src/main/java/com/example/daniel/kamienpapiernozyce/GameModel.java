@@ -2,11 +2,11 @@ package com.example.daniel.kamienpapiernozyce;
 
 import java.util.Random;
 
-public class Model {
-    int gamerWinsNum;
-    int computerWinsNum;
+public class GameModel {
+    private int gamerWinsNum;
+    private int computerWinsNum;
 
-    public Model() {
+    public GameModel() {
         gamerWinsNum = 0;
         computerWinsNum = 0;
     }
@@ -28,8 +28,8 @@ public class Model {
     }
 
     public String createRandomGesture() {
-        Random random = new Random();
         String result = null;
+        Random random = new Random();
         switch (random.nextInt(3)) {
             case 0:
                 result = "paper";
