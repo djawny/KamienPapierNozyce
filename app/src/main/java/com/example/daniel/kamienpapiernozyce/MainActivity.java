@@ -1,8 +1,10 @@
 package com.example.daniel.kamienpapiernozyce;
 
+import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.View;
@@ -17,7 +19,7 @@ import butterknife.BindDrawable;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, DialogInterface.OnClickListener {
 
     GameModel gameModel;
 
@@ -89,6 +91,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    private void showDialogWindow(String msg) {
+        AlertDialog alertDialog = new AlertDialog.Builder(this)
+                .setTitle(msg)
+                .setCancelable(false)
+                .setPositiveButton("Jeszcze raz", this)
+                .setNegativeButton("Już mam dość", this)
+                .create();
+        alertDialog.show();
+    }
+
     private void onClickReaction(Drawable paper, Drawable randomGesture) {
         gamerChoiceImageView.setImageDrawable(paper);
         computerChoiceImageView.setImageDrawable(randomGesture);
@@ -99,7 +111,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void displayGameResult(Drawable gamerGesture, Drawable computerGesture) {
         String winMsg = gameModel.checkWinningConditions(drawToStr(gamerGesture), drawToStr(computerGesture));
-        toastMsg(winMsg);
+//        toastMsg(winMsg);
+        showDialogWindow(winMsg);
         updateWinsView();
     }
 
@@ -165,5 +178,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             gestureName = "rock";
         }
         return gestureName;
+    }
+
+    @Override
+    public void onClick(DialogInterface dialog, int which) {
+        switch (which) {
+            case AlertDialog.BUTTON_POSITIVE:
+                setResultsInvisible();
+                break;
+            case AlertDialog.BUTTON_NEGATIVE:
+                finish();
+                break;
+        }
     }
 }
