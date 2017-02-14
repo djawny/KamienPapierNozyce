@@ -15,19 +15,25 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Random;
+
 import butterknife.BindDrawable;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, DialogInterface.OnClickListener, Animation.AnimationListener {
 
-    GameModel gameModel;
+    public static final int PAPER = 0;
+    public static final int SCISSORS = 1;
+    public static final int ROCK = 2;
+    private int gamerScore;
+    private int computerScore;
     String winMsg;
 
-    @BindView(R.id.computerChoiceImageView)
-    ImageView computerChoiceImageView;
     @BindView(R.id.gamerChoiceImageView)
     ImageView gamerChoiceImageView;
+    @BindView(R.id.computerChoiceImageView)
+    ImageView computerChoiceImageView;
 
     @BindView(R.id.gamerScoreTextView)
     TextView gamerWinsTextView;
@@ -48,20 +54,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @BindDrawable(R.drawable.rock)
     Drawable rock;
 
+    Random generator = new Random();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        setTitle("Kamień Papier Nożyce");
         init();
         setListeners();
     }
 
     private void init() {
-        setTitle("Kamień Papier Nożyce");
-        gameModel = new GameModel();
-        updateWinsView();
-        setResultsInvisible();
+        gamerScore = 0;
+        computerScore = 0;
+        updateScoreTextViews();
+        setChoiceImageViewsInvisible();
     }
 
     private void setListeners() {
@@ -70,25 +79,62 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         rockButton.setOnClickListener(this);
     }
 
+    private void updateScoreTextViews() {
+        gamerWinsTextView.setText(String.valueOf(gamerScore));
+        computerWinsTextView.setText(String.valueOf(computerScore));
+    }
+
+    private void setChoiceImageViewsInvisible() {
+        gamerChoiceImageView.setVisibility(View.INVISIBLE);
+        computerChoiceImageView.setVisibility(View.INVISIBLE);
+    }
+
+    private void setChoiceImageViewsVisible() {
+        gamerChoiceImageView.setVisibility(View.VISIBLE);
+        computerChoiceImageView.setVisibility(View.VISIBLE);
+    }
+
     @Override
     public void onClick(View v) {
-        Drawable randomGesture = strToDraw(gameModel.createRandomGesture());
+        int computerGesture = generator.nextInt(3);
         switch (v.getId()) {
             case R.id.paperButton:
-                onClickReaction(paper, randomGesture);
+                onClickReaction(PAPER, computerGesture);
                 break;
             case R.id.scissorsButton:
-                onClickReaction(scissors, randomGesture);
+                onClickReaction(SCISSORS, computerGesture);
                 break;
             case R.id.rockButton:
-                onClickReaction(rock, randomGesture);
+                onClickReaction(ROCK, computerGesture);
                 break;
         }
     }
 
-    private void showDialogWindow(String msg) {
+    private void onClickReaction(int gamerGesture, int computerGesture) {
+        gamerChoiceImageView.setImageDrawable(getDrawableById(gamerGesture));
+        computerChoiceImageView.setImageDrawable(getDrawableById(computerGesture));
+        setChoiceImageViewsVisible();
+        animateComputerImageView();
+        checkWinner(gamerGesture, computerGesture);
+        updateScoreTextViews();
+    }
+
+    private Drawable getDrawableById(int gesture) {
+        switch (gesture) {
+            case PAPER:
+                return paper;
+            case SCISSORS:
+                return scissors;
+            case ROCK:
+                return rock;
+            default:
+                return null;
+        }
+    }
+
+    private void showEndDialog() {
         AlertDialog alertDialog = new AlertDialog.Builder(this)
-                .setTitle(msg)
+                .setMessage(winMsg)
                 .setCancelable(false)
                 .setPositiveButton("Jeszcze raz", this)
                 .setNegativeButton("Już mam dość", this)
@@ -96,28 +142,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         alertDialog.show();
     }
 
-    private void setResultsInvisible() {
-        gamerChoiceImageView.setVisibility(View.INVISIBLE);
-        computerChoiceImageView.setVisibility(View.INVISIBLE);
-    }
-
-    private void setResultsVisible() {
-        gamerChoiceImageView.setVisibility(View.VISIBLE);
-        computerChoiceImageView.setVisibility(View.VISIBLE);
-    }
-
-    private void onClickReaction(Drawable gamerGesture, Drawable computerGesture) {
-        gamerChoiceImageView.setImageDrawable(gamerGesture);
-        computerChoiceImageView.setImageDrawable(computerGesture);
-        setResultsVisible();
-        winMsg = gameModel.checkWinningConditions(drawToStr(gamerGesture), drawToStr(computerGesture));
-        updateWinsView();
-        animateComputerImageView();
-    }
-
-    private void updateWinsView() {
-        gamerWinsTextView.setText(String.valueOf(gameModel.getGamerScore()));
-        computerWinsTextView.setText(String.valueOf(gameModel.getComputerScore()));
+    @Override
+    public void onClick(DialogInterface dialog, int which) {
+        switch (which) {
+            case AlertDialog.BUTTON_POSITIVE:
+                init();
+                break;
+            case AlertDialog.BUTTON_NEGATIVE:
+                finish();
+                break;
+        }
     }
 
     private void animateComputerImageView() {
@@ -126,70 +160,51 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         computerAnimation.setAnimationListener(this);
     }
 
-    private Drawable strToDraw(String gesture) {
-        Drawable drawableGesture = null;
-        switch (gesture) {
-            case "paper":
-                drawableGesture = paper;
-                break;
-            case "scissors":
-                drawableGesture = scissors;
-                break;
-            case "rock":
-                drawableGesture = rock;
-                break;
-        }
-        return drawableGesture;
-    }
-
-    private String drawToStr(Drawable gesture) {
-        String gestureName;
-        if (gesture.equals(paper)) {
-            gestureName = "paper";
-        } else if (gesture.equals(scissors)) {
-            gestureName = "scissors";
-        } else {
-            gestureName = "rock";
-        }
-        return gestureName;
-    }
-
-    @Override
-    public void onClick(DialogInterface dialog, int which) {
-        switch (which) {
-            case AlertDialog.BUTTON_POSITIVE:
-                setResultsInvisible();
-                break;
-            case AlertDialog.BUTTON_NEGATIVE:
-                finish();
-                break;
+    public void checkWinner(int gamerGesture, int computerGesture) {
+        winMsg = "Remis!";
+        if (gamerGesture != computerGesture) {
+            if (gamerGesture == PAPER && computerGesture == ROCK
+                    || gamerGesture == SCISSORS && computerGesture == PAPER
+                    || gamerGesture == ROCK && computerGesture == SCISSORS) {
+                gamerScore += 1;
+                winMsg = "Gracz wygrywa!";
+            } else {
+                computerScore += 1;
+                winMsg = "Komputer wygrywa!";
+            }
         }
     }
 
     @Override
     public void onAnimationStart(Animation animation) {
-
     }
 
     @Override
     public void onAnimationEnd(Animation animation) {
-        showDialogWindow(winMsg);
+        toastMsg();
+        if (gamerScore >= 10) {
+            winMsg = "Gracz zwycięża rozgrywkę";
+            showEndDialog();
+        }
+        if (computerScore >= 10) {
+            winMsg = "Komputer zwycięża rozgrywkę";
+            showEndDialog();
+        }
     }
 
     @Override
     public void onAnimationRepeat(Animation animation) {
-
     }
 
-    private void toastMsg(String msg) {
-        Toast toast = Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT);
+    private void toastMsg() {
+        Toast toast = Toast.makeText(getApplicationContext(), winMsg, Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
         toast.show();
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                setResultsInvisible();
+                setChoiceImageViewsInvisible();
             }
-        }, 2500);
+        }, 2000);
     }
 }
