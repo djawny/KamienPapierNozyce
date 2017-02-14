@@ -26,31 +26,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @BindView(R.id.computerChoiceImageView)
     ImageView computerChoiceImageView;
-
     @BindView(R.id.gamerChoiceImageView)
     ImageView gamerChoiceImageView;
 
     @BindView(R.id.gamerScoreTextView)
     TextView gamerWinsTextView;
-
     @BindView(R.id.computerScoreTextView)
     TextView computerWinsTextView;
 
     @BindView(R.id.paperButton)
     ImageButton paperButton;
-
     @BindView(R.id.scissorsButton)
     ImageButton scissorsButton;
-
     @BindView(R.id.rockButton)
     ImageButton rockButton;
 
     @BindDrawable(R.drawable.paper)
     Drawable paper;
-
     @BindDrawable(R.drawable.scissors)
     Drawable scissors;
-
     @BindDrawable(R.drawable.rock)
     Drawable rock;
 
