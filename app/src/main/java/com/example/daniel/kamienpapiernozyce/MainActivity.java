@@ -132,34 +132,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    private void showEndDialog() {
-        AlertDialog alertDialog = new AlertDialog.Builder(this)
-                .setMessage(winMsg)
-                .setCancelable(false)
-                .setPositiveButton("Jeszcze raz", this)
-                .setNegativeButton("Już mam dość", this)
-                .create();
-        alertDialog.show();
-    }
-
-    @Override
-    public void onClick(DialogInterface dialog, int which) {
-        switch (which) {
-            case AlertDialog.BUTTON_POSITIVE:
-                init();
-                break;
-            case AlertDialog.BUTTON_NEGATIVE:
-                finish();
-                break;
-        }
-    }
-
-    private void animateComputerImageView() {
-        Animation computerAnimation = AnimationUtils.loadAnimation(this, R.anim.magnification);
-        computerChoiceImageView.startAnimation(computerAnimation);
-        computerAnimation.setAnimationListener(this);
-    }
-
     public void checkWinner(int gamerGesture, int computerGesture) {
         winMsg = "Remis!";
         if (gamerGesture != computerGesture) {
@@ -173,6 +145,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 winMsg = "Komputer wygrywa!";
             }
         }
+    }
+
+    private void animateComputerImageView() {
+        Animation computerAnimation = AnimationUtils.loadAnimation(this, R.anim.magnification);
+        computerChoiceImageView.startAnimation(computerAnimation);
+        computerAnimation.setAnimationListener(this);
     }
 
     @Override
@@ -194,6 +172,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onAnimationRepeat(Animation animation) {
+    }
+
+    private void showEndDialog() {
+        AlertDialog alertDialog = new AlertDialog.Builder(this)
+                .setMessage(winMsg)
+                .setCancelable(false)
+                .setPositiveButton("Jeszcze raz", this)
+                .setNegativeButton("Już mam dość", this)
+                .create();
+        alertDialog.show();
+    }
+
+    @Override
+    public void onClick(DialogInterface dialog, int which) {
+        switch (which) {
+            case AlertDialog.BUTTON_POSITIVE:
+                init();
+                break;
+            case AlertDialog.BUTTON_NEGATIVE:
+                finish();
+                break;
+        }
     }
 
     private void toastMsg() {
