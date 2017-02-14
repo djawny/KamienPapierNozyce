@@ -205,6 +205,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void run() {
                 setChoiceImageViewsInvisible();
             }
-        }, 2000);
+        }, 1000);
     }
 }
