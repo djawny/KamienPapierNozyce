@@ -5,13 +5,14 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/primary_light"
     tools:context="com.example.daniel.kamienpapiernozyce.MainActivity">
 
     <LinearLayout
         android:id="@+id/topLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorAccent"
+        android:background="@drawable/panel_bg"
         android:orientation="horizontal"
         android:padding="8dp">
 
@@ -21,7 +22,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="Gracz:" />
+            android:text="Gracz:"
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/gamerScoreTextView"
@@ -30,7 +32,9 @@
             android:background="@android:color/white"
             android:ems="3"
             android:gravity="center"
-            android:text="0" />
+            android:padding="2dp"
+            android:text="0"
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/textView2"
@@ -38,7 +42,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="Komputer:" />
+            android:text="Komputer:"
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/computerScoreTextView"
@@ -47,7 +52,9 @@
             android:background="@android:color/white"
             android:ems="3"
             android:gravity="center"
-            android:text="0" />
+            android:padding="2dp"
+            android:text="0"
+            android:textSize="20sp" />
     </LinearLayout>
 
     <LinearLayout
@@ -84,7 +91,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@color/colorAccent"
         android:orientation="horizontal">
 
         <ImageButton
@@ -92,6 +98,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:background="@drawable/panel_bg"
             app:srcCompat="@drawable/paper" />
 
         <ImageButton
@@ -99,6 +106,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:background="@drawable/panel_bg"
             app:srcCompat="@drawable/scissors" />
 
         <ImageButton
@@ -106,6 +114,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:background="@drawable/panel_bg"
             app:srcCompat="@drawable/rock" />
     </LinearLayout>
 </RelativeLayout>
